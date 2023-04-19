@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Stock {
+  id         Int      @id @default(autoincrement())
+  name       String
+  curve      String
+  address    Address  @relation(fields: [adressesId], references: [id])
+  createdAt  DateTime @default(now())
+  adressesId Int
+  Item       Item[]
+
+  @@map("stocks")
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  street    String
+  module    String
+  level     Int
+  createdAt DateTime @default(now())
+  Stock     Stock[]
+  Items     Item[]
+
+  @@map("adresses")
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  Items     Item[]
+
+  @@map("products")
+}
+
+model Item {
+  id         Int      @id @default(autoincrement())
+  quantity   Int
+  product    Product  @relation(fields: [productId], references: [id])
+  address    Address  @relation(fields: [adressesId], references: [id])
+  stock      Stock    @relation(fields: [stockId], references: [id])
+  createdAt  DateTime @default(now())
+  adressesId Int
+  productId  Int
+  stockId    Int
+
+  @@map("items")
+}
