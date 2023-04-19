@@ -11,13 +11,13 @@ datasource db {
 }
 
 model Stock {
-  id         Int      @id @default(autoincrement())
-  name       String
-  curve      String
-  address    Address  @relation(fields: [adressesId], references: [id])
-  createdAt  DateTime @default(now())
-  adressesId Int
-  Item       Item[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  curve     String
+  address   Address  @relation(fields: [addressId], references: [id])
+  createdAt DateTime @default(now())
+  addressId Int
+  Item      Item[]
 
   @@map("stocks")
 }
@@ -44,15 +44,15 @@ model Product {
 }
 
 model Item {
-  id         Int      @id @default(autoincrement())
-  quantity   Int
-  product    Product  @relation(fields: [productId], references: [id])
-  address    Address  @relation(fields: [adressesId], references: [id])
-  stock      Stock    @relation(fields: [stockId], references: [id])
-  createdAt  DateTime @default(now())
-  adressesId Int
-  productId  Int
-  stockId    Int
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  product   Product  @relation(fields: [productId], references: [id])
+  address   Address  @relation(fields: [addressId], references: [id])
+  stock     Stock    @relation(fields: [stockId], references: [id])
+  createdAt DateTime @default(now())
+  addressId Int
+  productId Int
+  stockId   Int
 
   @@map("items")
 }
